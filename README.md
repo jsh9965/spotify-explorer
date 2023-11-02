@@ -9,7 +9,7 @@ This will be a site that will allow users to filter, create, and analyze their m
 
 ## Data Model
 
-The application will store Users, Lists of songs, and Friends
+The application will store Users, Songs, Lists of songs, and Friends
 
 * users can have as many lists and friends as they choose
 * each friend is another user, with their own song lists
@@ -25,13 +25,22 @@ An Example User:
   friends: // an array of other user's names
 }
 ```
+A Song:
+
+```javascript
+{
+  title: //name of song
+  artist: //singer of the song
+}
+```
+
 
 A Song List:
 
 ```javascript
 {
   playlsitName: //name of list
-  songs: //an array of song objects {title: \\songtitle, artist: \\songartist}
+  songs: //an array of songs
 }
 ```
 
