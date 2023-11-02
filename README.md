@@ -89,7 +89,7 @@ Basic site [map](documentation/SiteMap.jpg)
 * (4 points) Spotify API
     * use the spotify API to get songs/playlists, and find information about them
 
-12 points total out of 10 required points
+13 points total out of 10 required points
 
 
 ## [Link to Initial Main Project File](app.mjs) 
