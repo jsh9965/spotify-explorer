@@ -41,6 +41,7 @@ A Song List:
 {
   playlsitName: //name of list
   songs: //an array of songs
+  public: //boolean which determines whether friends can see this playlist
 }
 ```
 
@@ -55,7 +56,7 @@ A Song List:
 
 /myAccount - page for viewing and managing your friends and playlists as well as changing your name or logging out
 
-![myAccount](documentation/myAccount.jps)
+![myAccount](documentation/myAccount.jpg)
 
 /Editor - page for filtering, creating, previewing, and viewing playlsits
 
@@ -71,31 +72,24 @@ Basic site [map](documentation/SiteMap.jpg)
 
 ## User Stories or Use Cases
 
-(__TODO__: write out how your application will be used through [user stories](http://en.wikipedia.org/wiki/User_story#Format) and / or [use cases](https://en.wikipedia.org/wiki/Use_case))
-
 1. as non-registered user, I can register a new account with the site
 2. as a user, I can log in to the site
-3. as a user, I can create a new grocery list
-4. as a user, I can view all of the grocery lists I've created in a single list
-5. as a user, I can add items to an existing grocery list
-6. as a user, I can cross off items in an existing grocery list
+3. as a user, I can add friends, and view my friends' accounts to see their playlists
+4. as a user, I can view my playlists, and mark them to be public or private
+5. as a user, I can create new playlists, or preview them, by applying filters and operations on existing playlists
+6. as a user, I can change my username, or logout
 
 ## Research Topics
 
-(__TODO__: the research topics that you're planning on working on along with their point values... and the total points of research topics listed)
-
 * (5 points) Integrate user authentication
     * I'm going to be using passport for user authentication
-    * And account has been made for testing; I'll email you the password
-    * see <code>cs.nyu.edu/~jversoza/ait-final/register</code> for register page
-    * see <code>cs.nyu.edu/~jversoza/ait-final/login</code> for login page
-* (4 points) Perform client side form validation using a JavaScript library
-    * see <code>cs.nyu.edu/~jversoza/ait-final/my-form</code>
-    * if you put in a number that's greater than 5, an error message will appear in the dom
-* (5 points) vue.js
-    * used vue.js as the frontend framework; it's a challenging library to learn, so I've assigned it 5 points
+* (4 points) Unit tests with javascript
+  * use mocha
+  * make sure website does not crash even under variety of combinations of inputs/filters
+* (4 points) Spotify API
+    * use the spotify API to get songs/playlists, and find information about them
 
-10 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit)
+12 points total out of 10 required points
 
 
 ## [Link to Initial Main Project File](app.mjs) 
