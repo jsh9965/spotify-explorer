@@ -49,25 +49,25 @@ A Song List:
 
 ## Wireframes
 
-(__TODO__: wireframes for all of the pages on your site; they can be as simple as photos of drawings or you can use a tool like Balsamiq, Omnigraffle, etc.)
+/login - page for logging into your account
 
-/list/create - page for creating a new shopping list
+![login](documentation/Login.jpg)
 
-![list create](documentation/list-create.png)
+/myAccount - page for viewing and managing your friends and playlists as well as changing your name or logging out
 
-/list - page for showing all shopping lists
+![myAccount](documentation/myAccount.jps)
 
-![list](documentation/list.png)
+/Editor - page for filtering, creating, previewing, and viewing playlsits
 
-/list/slug - page for showing specific shopping list
+![editor](documentation/Editor.jpg)
 
-![list](documentation/list-slug.png)
+/User/*username* - page for viewing other people's account, typically friends, so you can see their friends and playlsits
+
+![User](documentation/GeneralUser.jpg)
 
 ## Site map
 
-(__TODO__: draw out a site map that shows how pages are related to each other)
-
-Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia/commons/2/20/Sitemap_google.jpg), but you can create one without the screenshots, drop shadows, etc. ... just names of pages and where they flow to.
+Basic site [map](documentation/SiteMap.jpg)
 
 ## User Stories or Use Cases
 
