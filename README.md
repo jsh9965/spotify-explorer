@@ -1,50 +1,37 @@
 The content below is an example project proposal / requirements document. Replace the text below the lines marked "__TODO__" with details specific to your project. Remove the "TODO" lines.
 
-(__TODO__: your project name)
-
-# Shoppy Shoperson 
+# Spotify explorer
 
 ## Overview
 
-(__TODO__: a brief one or two paragraph, high-level description of your project)
-
-Remembering what to buy at the grocery store is waaaaay too difficult. Also, shopping for groceries when you're hungry leads to regrettable purchases. Sooo... that's where Shoppy Shoperson comes in!
-
-Shoppy Shoperson is a web app that will allow users to keep track of multiple grocery lists. Users can register and login. Once they're logged in, they can create or view their grocery list. For every list that they have, they can add items to the list or cross off items.
+This will be a site that will allow users to filter, create, and analyze their music taste, as well as compare with other people.  There are many sites that use the Spotify API to tell you very specific things about your music taste, but this will allow the user to choose what statistics they want to see, make and manage playlists using this information.  They will also be able to have friends, and view their friend's music, and apply filters in a similar way.
 
 
 ## Data Model
 
-(__TODO__: a description of your application's data and their relationships to each other) 
+The application will store Users, Lists of songs, and Friends
 
-The application will store Users, Lists and Items
+* users can have as many lists and friends as they choose
+* each friend is another user, with their own song lists
 
-* users can have multiple lists (via references)
-* each list can have multiple items (by embedding)
-
-(__TODO__: sample documents)
 
 An Example User:
 
 ```javascript
 {
-  username: "shannonshopper",
+  username: "musicEnjoyer",
   hash: // a password hash,
-  lists: // an array of references to List documents
+  lists: // an array of song lists
+  friends: // an array of other user's names
 }
 ```
 
-An Example List with Embedded Items:
+A Song List:
 
 ```javascript
 {
-  user: // a reference to a User object
-  name: "Breakfast foods",
-  items: [
-    { name: "pancakes", quantity: "9876", checked: false},
-    { name: "ramen", quantity: "2", checked: true},
-  ],
-  createdAt: // timestamp
+  playlsitName: //name of list
+  songs: //an array of song objects {title: \\songtitle, artist: \\songartist}
 }
 ```
 
