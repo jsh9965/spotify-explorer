@@ -4,7 +4,7 @@ The content below is an example project proposal / requirements document. Replac
 
 ## Overview
 
-This will be a site that will allow users to filter, create, and analyze their music taste, as well as compare with other people.  There are many sites that use the Spotify API to tell you very specific things about your music taste, but this will allow the user to choose what statistics they want to see, make and manage playlists using this information.  They will also be able to have friends, and view their friend's music, and apply filters in a similar way.
+This will be a site that will allow users to filter, create, and analyze their music taste, as well as compare with other people.  There are many sites that use the Spotify API to tell you very specific things about your music taste, but this will allow the user to choose what statistics they want to see, make and manage playlists using this information.  They will also be able to have friends, and view their friend's music, and apply filters in a similar way.  This will involve using the spotify API to sort and filter by various statistics such as genre, popularity, length, artist, album, or intersection with other playlists.
 
 
 ## Data Model
@@ -37,8 +37,6 @@ A Song List:
 
 
 ## [Link to Commented First Draft Schema](db.mjs) 
-
-(__TODO__: create a first draft of your Schemas in db.mjs and link to it)
 
 ## Wireframes
 
