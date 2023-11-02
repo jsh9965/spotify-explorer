@@ -24,7 +24,8 @@ const Song = new mongoose.Schema({
 // can create automatically by applying restraints to existing playlsits
 const songList = new mongoose.Schema({
   name: {type: String, required: true},
-  songs:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Song' }]
+  songs:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Song' }],
+  public: {type: boolean, required: true}
 });
 
 // TODO: add remainder of setup for slugs, connection, registering models, etc. below
