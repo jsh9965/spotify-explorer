@@ -40,7 +40,19 @@ app.get('/Editor', (req, res) => {
 
 app.post('/Editor', (req, res) => {
     //create playlist
+    const submittedValues = {
+        genre: req.body.genre,
+        time: req.body.time,
+        timeComparison: req.body['time-comparison'],
+        streams: req.body.streams,
+        streamsComparison: req.body['streams-comparison'],
+        artist: req.body.artist,
+        date: req.body.date,
+        dateComparison: req.body['date-comparison'],
+        album: req.body.album,
+    };
+    res.render('editor', submittedValues);
 });
 
-
+console.log("here");
 app.listen(process.env.PORT || 3000);
