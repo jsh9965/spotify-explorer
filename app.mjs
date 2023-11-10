@@ -2,12 +2,21 @@ import './config.mjs';
 import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url';
+import './db.mjs';
+import mongoose from 'mongoose';
+import url from 'url';
+//const Review = mongoose.model('Review');
+import session from 'express-session';
 
 const app = express();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
+app.use(express.static(path.join(__dirname, 'public')));
 
+// configure templating to hbs
+app.set('view engine', 'hbs');
 
+// body parser (req.body)
+app.use(express.urlencoded({ extended: false }));
 
 app.get('/login', (req, res) => {
     res.render('login');

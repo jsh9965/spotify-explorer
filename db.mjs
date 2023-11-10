@@ -1,5 +1,5 @@
 // 1ST DRAFT DATA MODEL
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 // users
 const User = new mongoose.Schema({
@@ -25,7 +25,7 @@ const Song = new mongoose.Schema({
 const songList = new mongoose.Schema({
   name: {type: String, required: true},
   songs:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Song' }],
-  public: {type: boolean, required: true}
+  public: {type: Boolean, required: true}
 });
 
 // TODO: add remainder of setup for slugs, connection, registering models, etc. below
