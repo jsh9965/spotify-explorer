@@ -29,3 +29,4 @@ const songList = new mongoose.Schema({
 });
 
 // TODO: add remainder of setup for slugs, connection, registering models, etc. below
+mongoose.connect(process.env.DSN);
