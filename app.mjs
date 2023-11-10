@@ -10,7 +10,7 @@ import session from 'express-session';
 
 const app = express();
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '')));
 
 // configure templating to hbs
 app.set('view engine', 'hbs');
