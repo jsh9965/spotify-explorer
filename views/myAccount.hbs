@@ -7,20 +7,20 @@
 <body>
     <div class="profile-header">
         <div class="profile-container">
-            <img class="profile-image" src="/public/img/defaultPFP.avif" alt="User Image">
+            <img class="profile-image" src={{pfp}} alt="User Image">
             <div class="profile-info">
-                <p>Username: {{Username}}</p>
+                <p>Username: {{username}}</p>
                 <button>Logout</button>
             </div>
         </div>
 
         <div class="form-container">
-            <form>
-                <label for="new-username">New Username:</label>
-                <input type="text" id="new-username" class="form-input" name="new-username">
+            <form id="change-user" action="/myAccount" method="POST">
+                <label for="username">New Username:</label>
+                <input type="text" id="username" class="form-input" name="username">
 
-                <label for="new-link">Link:</label>
-                <input type="text" id="new-link" class="form-input" name="new-link">
+                <label for="pfp">Link to new Profile Picture:</label>
+                <input type="text" id="pfp" class="form-input" name="pfp">
 
                 <input type="submit" value="Submit">
             </form>

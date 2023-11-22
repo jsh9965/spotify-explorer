@@ -40,7 +40,26 @@ app.get('/User/username', (req, res) => {
 });
 
 app.get('/myAccount', (req, res) => {
-    res.render('myAccount');
+    if(!(req.session.pfp))
+    {
+        req.session.pfp = "/public/img/defaultPFP.avif"
+        res.locals.pfp = req.session.pfp;
+    }
+    res.render('myAccount', { username: req.session.username, pfp: req.session.pfp });
+});
+
+app.post('/myAccount', (req, res) => {
+    if(req.body.username)
+    {
+        req.session.username = req.body.username;
+        res.locals.username = req.session.username;
+    }
+    if(req.body.pfp)
+    {
+        req.session.pfp = req.body.pfp;
+        res.locals.pfp = req.session.pfp;
+    }
+    res.render('myAccount', { username: req.session.username, pfp: req.session.pfp });
 });
 
 app.get('/Editor', (req, res) => {
