@@ -38,6 +38,10 @@ app.get('/Editor', (req, res) => {
     res.render('editor');
 });
 
+app.get('/Progress', (req, res) => {
+    res.render('progress');
+});
+
 app.post('/Editor', (req, res) => {
     //create playlist
     const submittedValues = {
