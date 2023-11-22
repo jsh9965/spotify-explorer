@@ -9,7 +9,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.3.1",
     "eslint": "^8.52.0",
-    "handlebars": "^4.7.8"
-  }
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "handlebars": "^4.7.8",
+    "hbs": "^4.2.0",
+    "mongoose": "^8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nyu-csci-ua-0467-001-002-fall-2023/final-project-jsh9965.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nyu-csci-ua-0467-001-002-fall-2023/final-project-jsh9965/issues"
+  },
+  "homepage": "https://github.com/nyu-csci-ua-0467-001-002-fall-2023/final-project-jsh9965#readme"
 }

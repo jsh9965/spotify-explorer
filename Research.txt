@@ -1,0 +1,91 @@
+SPOTIFY API
+I've mostly been looking at documentation, example projects, and code snippets from https://developer.spotify.com/
+
+
+Get and access token 
+curl -X POST "https://accounts.spotify.com/api/token" \
+     -H "Content-Type: application/x-www-form-urlencoded" \
+     -d "grant_type=client_credentials&client_id=your-client-id&client_secret=your-client-secret"
+{
+  "access_token": "BQDBKJ5eo5jxbtpWjVOj7ryS84khybFpP_lTqzV7uV-T_m0cTfwvdn5BnBSKPxKgEb11",
+  "token_type": "Bearer",
+  "expires_in": 3600 //valid 1 hour
+}
+
+Use token to get artist data
+curl "https://api.spotify.com/v1/artists/4Z8W4fKeB5YxbusRsdQVPb" \
+     -H "Authorization: Bearer  BQDBKJ5eo5jxbtpWjVOj7ryS84khybFpP_lTqzV7uV-T_m0cTfwvdn5BnBSKPxKgEb11"
+
+JSON response
+     {
+  "external_urls": {
+    "spotify": "https://open.spotify.com/artist/4Z8W4fKeB5YxbusRsdQVPb"
+  },
+  "followers": {
+    "href": null,
+    "total": 7625607
+  },
+  "genres": [
+    "alternative rock",
+    "art rock",
+    "melancholia",
+    "oxford indie",
+    "permanent wave",
+    "rock"
+  ],
+  "href": "https://api.spotify.com/v1/artists/4Z8W4fKeB5YxbusRsdQVPb",
+  "id": "4Z8W4fKeB5YxbusRsdQVPb",
+  "images": [
+    {
+      "height": 640,
+      "url": "https://i.scdn.co/image/ab6761610000e5eba03696716c9ee605006047fd",
+      "width": 640
+    },
+    {
+      "height": 320,
+      "url": "https://i.scdn.co/image/ab67616100005174a03696716c9ee605006047fd",
+      "width": 320
+    },
+    {
+      "height": 160,
+      "url": "https://i.scdn.co/image/ab6761610000f178a03696716c9ee605006047fd",
+      "width": 160
+    }
+  ],
+  "name": "Radiohead",
+  "popularity": 79,
+  "type": "artist",
+  "uri": "spotify:artist:4Z8W4fKeB5YxbusRsdQVPb"
+}
+
+//Program for viewing recent top tracks
+// Authorization token that must have been created previously. See : https://developer.spotify.com/documentation/web-api/concepts/authorization
+const token = 'undefined';
+async function fetchWebApi(endpoint, method, body) {
+  const res = await fetch(`https://api.spotify.com/${endpoint}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    method,
+    body:JSON.stringify(body)
+  });
+  return await res.json();
+}
+
+async function getTopTracks(){
+  // Endpoint reference : https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks
+  return (await fetchWebApi(
+    'v1/me/top/tracks?time_range=short_term&limit=5', 'GET'
+  )).items;
+}
+
+const topTracks = await getTopTracks();
+console.log(
+  topTracks?.map(
+    ({name, artists}) =>
+      `${name} by ${artists.map(artist => artist.name).join(', ')}`
+  )
+);
+
+
+
