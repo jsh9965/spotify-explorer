@@ -54,7 +54,7 @@ app.post('/myAccount', (req, res) => {
         req.session.username = req.body.username;
         res.locals.username = req.session.username;
     }
-    if(req.body.pfp)
+    if(req.body.pfp && isImage(req.body.pfp))
     {
         req.session.pfp = req.body.pfp;
         res.locals.pfp = req.session.pfp;
@@ -88,3 +88,10 @@ app.post('/Editor', (req, res) => {
 
 console.log("here");
 app.listen(process.env.PORT || 3000);
+
+function isImage(url)
+{
+    const extension = url.split('.').pop().toLowerCase();
+    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'avif', 'webp'];
+    return imageExtensions.includes(extension);
+}
