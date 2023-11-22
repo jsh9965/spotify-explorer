@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>My Profile</title>
+    <link rel="stylesheet" href="/public/styles/userHeader.css" type="text/css" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+    <div class="profile-header">
+        <div class="profile-container">
+            <img class="profile-image" src="/public/img/defaultPFP.avif" alt="User Image">
+            <div class="profile-info">
+                <p>Username: {{Username}}</p>
+                <button>Logout</button>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <form>
+                <label for="new-username">New Username:</label>
+                <input type="text" id="new-username" class="form-input" name="new-username">
+
+                <label for="new-link">Link:</label>
+                <input type="text" id="new-link" class="form-input" name="new-link">
+
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+
+        <div class="bullet-points">
+            <p>Bullet Points:</p>
+            <ul>
+                <li class="bullet-point">Point 1</li>
+                <li class="bullet-point">Point 2</li>
+                <li class="bullet-point">Point 3</li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>

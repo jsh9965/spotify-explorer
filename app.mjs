@@ -18,6 +18,15 @@ app.set('view engine', 'hbs');
 // body parser (req.body)
 app.use(express.urlencoded({ extended: false }));
 
+const sessionOptions = { 
+	secret: 'secret', 
+	saveUninitialized: false, 
+	resave: false 
+};
+app.use(session(sessionOptions));
+
+
+
 app.get('/login', (req, res) => {
     res.render('login');
 });

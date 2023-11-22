@@ -1,0 +1,38 @@
+.profile-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 20px;
+}
+
+.profile-container {
+    align-items: center;
+}
+
+.profile-image {
+    width: 200px;
+    height: 200px;
+    margin-right: 20px;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container {
+    max-width: 300px;
+    margin-left: auto; /* Center the form */
+    margin-right: auto;
+}
+
+.form-input {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.bullet-points {
+    margin-left: auto; /* Right justify the bullets */
+    margin-right: 20px;
+    margin-bottom: 5px;
+}
