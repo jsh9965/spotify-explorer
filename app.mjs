@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 import './db.mjs';
 import mongoose from 'mongoose';
 import url from 'url';
-//const Review = mongoose.model('Review');
+const appUser = mongoose.model('appUser');
 import session from 'express-session';
 import passport from 'passport';
 import { Strategy as SpotifyStrategy } from 'passport-spotify';
@@ -35,22 +35,31 @@ passport.use(
         {
             clientID: '93f9f155c30949a98f9e0f3ee7aab905',
             clientSecret: '340a2326cff24d74bbddfd1ea681f348',
-            callbackURL: 'http://localhost:24931/myAccount' // Adjust the URL based on your setup
+            callbackURL: 'http://localhost:24931/authSuccess' // Adjust the URL based on your setup
         },
-        function(accessToken, refreshToken, expires_in, profile, done) {
-
-            // Save the user profile information in the session
-            req.session.accessToken = accessToken
-            res.locals.accessToken = req.session.accessToken;
-            req.session.refreshToken = refreshToken
-            res.locals.refreshToken = req.session.refreshToken;
-            req.session.expires_in = expires_in
-            res.locals.expires_in = req.session.expires_in;
-            req.session.profile = profile
-            res.locals.profile = req.session.profile;
-            console.log("profile");
-            console.log(profile);
-            return done(null, profile);
+        async function(accessToken, refreshToken, expires_in, profile, done) {
+            try {
+                console.log(profile);
+                const existingUser = await appUser.findOne({ id: profile.id });
+                if (existingUser) {
+                    //don't change custom usernames or pfps of existing users
+                    return done(null, existingUser);
+                } else {
+                    // User doesn't exist, create a new user with pfp and name of spotify account
+                    const newUser = new appUser({
+                        id: profile.id,
+                        username: profile.displayName,
+                        profilePicture: profile.photos && profile.photos.length > 0 ? profile.photos[0].value : '/public/img/defaultPFP.avif',
+                        lists: [],
+                        friends: []
+                    });
+                    await newUser.save();
+                    return done(null, newUser);
+                }
+            } catch (error) {
+                console.error('Error handling Spotify authentication:', error);
+                return done(error);
+            }
         }
     )
 );
@@ -64,6 +73,9 @@ passport.deserializeUser(function(obj, done) {
 });
 
 
+app.get('/', (req, res) => {
+    res.render('login');
+});
 
 app.get('/login', (req, res) => {
     res.redirect('/auth/spotify');
@@ -76,30 +88,105 @@ app.get('/User/username', (req, res) => {
     res.render('user');
 });
 
-app.get('/myAccount', passport.authenticate('spotify', { failureRedirect: '/editor' }), async (req, res) => {
-    if(!(req.session.pfp))
-    {
-        req.session.pfp = "/public/img/defaultPFP.avif"
-        res.locals.pfp = req.session.pfp;
+app.get('/authSuccess', passport.authenticate('spotify', { failureRedirect: '/login' }), (req, res) => {
+    res.redirect("/myAccount");});
+
+app.get('/myAccount', async (req, res) => {
+    try{
+        let userInDatabase;
+        if (!req.isAuthenticated()) {
+            res.redirect('/login'); // Redirect to login if not authenticated
+            return;
+        }
+        if(!req.session.userID)
+        {
+            req.session.userID = req.user.id
+            userInDatabase = await appUser.findOne({ id: req.session.userID });
+            if (!userInDatabase) {
+                // If the user doesn't exist in the database, create a new user
+                userInDatabase = new appUser({
+                    id: req.user.id,
+                    username: req.user.displayName,
+                    profilePicture: req.user.photos && req.user.photos.length > 0 ? req.user.photos[0].value : '/public/img/defaultPFP.avif',
+                    lists: [],
+                    friends: []
+                });
+
+                // Save the new user to the database
+                await userInDatabase.save();
+            }
+            req.session.user = userInDatabase;
+            req.session.save();
+        }
+        else {userInDatabase = await appUser.findOne({ id: req.session.userID });}
+        const friendsDetails = await Promise.all(
+            userInDatabase.friends.map(async friendID => {
+                const friend = await appUser.findById(friendID);
+                return { id: friend.id, profilePicture: friend.profilePicture };
+            })
+        );
+        res.render('myAccount', { username: req.session.user.username, pfp: req.session.user.profilePicture, id: req.user.id, friendsDetails: friendsDetails });
+    } catch (error) {
+        console.error('Error in myAccount route:', error);
+        res.redirect('/auth/error');
     }
-    console.log("req")
-    console.log(req.session)
-    console.log(req.user)
-    res.render('myAccount', { username: req.session.username, pfp: req.session.pfp });
 });
 
 app.post('/myAccount', async (req, res) => {
-    if(req.body.username)
-    {
-        req.session.username = req.body.username;
-        res.locals.username = req.session.username;
+    try {
+        if (!req.isAuthenticated()) {
+            res.redirect('/login');
+            return;
+        }
+        if (!req.session.userID) {
+            res.redirect('/login');
+            return;
+        }
+        let userInDatabase = await appUser.findOne({ id: req.session.userID });
+        if (!userInDatabase) {
+            res.redirect('/login');
+            return;
+        }
+        if (req.body.username) {
+            userInDatabase.username = req.body.username;
+        }
+        if (req.body.pfp && isImage(req.body.pfp)) {
+            userInDatabase.profilePicture = req.body.pfp;
+        }
+        if(req.body.friendID)
+        {
+            const friendToAdd = await appUser.findOne({ id: req.body.friendID });
+            if(friendToAdd)
+            {
+                if (req.body.action === "add" && !(userInDatabase.friends.some(async friendID => friendID == req.body.friendID))) {
+                    if (friendToAdd) {
+                        userInDatabase.friends.push(friendToAdd);
+                    }
+                }
+                if (req.body.action === "remove") {
+                    const friendIndex = userInDatabase.friends.findIndex((async friendID => friendID == req.body.friendID));
+
+                    if (friendIndex !== -1) {
+                        userInDatabase.friends.splice(friendIndex, 1);
+                        console.log("spliced");
+                    }
+                }
+            }
+        }
+        await userInDatabase.save();
+        req.session.user = userInDatabase;
+        req.session.save();
+        const friendsDetails = await Promise.all(
+            userInDatabase.friends.map(async friendID => {
+                const friend = await appUser.findById(friendID);
+                return { id: friend.id, profilePicture: friend.profilePicture };
+            })
+        );
+        res.render('myAccount', { username: req.session.user.username, pfp: req.session.user.profilePicture, id: req.user.id, friendsDetails: friendsDetails });
+    } catch (error) {
+        console.error('Error in myAccount POST route:', error);
+        res.redirect('/auth/error');
     }
-    if(req.body.pfp && isImage(req.body.pfp))
-    {
-        req.session.pfp = req.body.pfp;
-        res.locals.pfp = req.session.pfp;
-    }
-    res.render('myAccount', { username: req.session.username, pfp: req.session.pfp });
 });
 
 app.get('/Editor', (req, res) => {
@@ -124,6 +211,13 @@ app.post('/Editor', (req, res) => {
         album: req.body.album,
     };
     res.render('editor', submittedValues);
+});
+
+app.get('/logout', (req, res) => {
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        res.redirect('/');
+      });
 });
 
 console.log("here");

@@ -2,9 +2,12 @@
 import mongoose from 'mongoose';
 
 // users
-const User = new mongoose.Schema({
+const appUser = new mongoose.Schema({
   // username provided by authentication plugin
   // password hash provided by authentication plugin
+  id: {type: String, required: true},
+  username: {type: String, required: true},
+  profilePicture: {type: String, required: true},
   lists:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'songList' }],
 friends:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 }, {
@@ -29,4 +32,5 @@ const songList = new mongoose.Schema({
 });
 
 // TODO: add remainder of setup for slugs, connection, registering models, etc. below
+mongoose.model('appUser', appUser);
 mongoose.connect(process.env.DSN);

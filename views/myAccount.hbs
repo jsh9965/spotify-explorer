@@ -8,7 +8,8 @@
             <img class="profile-image" src={{pfp}} alt="User Image">
             <div class="profile-info">
                 <p>Username: {{username}}</p>
-                <button>Logout</button>
+                <p>ID: {{id}}</p>
+                <button onclick="window.location.href='/logout';">Logout</button>
             </div>
         </div>
 
@@ -27,11 +28,37 @@
         <div class="bullet-points">
             <p>Bullet Points:</p>
             <ul>
-                <li class="bullet-point">Point 1</li>
-                <li class="bullet-point">Point 2</li>
-                <li class="bullet-point">Point 3</li>
+                <li class="bullet-point">Friends: {{friendsDetails.length}}</li>
+                <li class="bullet-point">Friends: {{friends.length}}</li>
+                <li class="bullet-point">Friends: {{friends.length}}</li>
             </ul>
         </div>
     </div>
+    <div class="friends-section">
+        <div class="friends-list">
+            <h3>Friends List:</h3>
+            {{#each friendsDetails}}
+                <div class="friends">
+                    <img class="friend-profile-image" src={{this.profilePicture}} alt="User Image">
+                    <p>ID: {{this.id}}</p>
+                </div>
+            {{/each}}
+        </div>
 
+        <div class="friend-form">
+            <h3>Add or Remove Friends:</h3>
+            <form id="add-remove-friend" action="/myAccount" method="POST">
+                <label for="friendID">Friend's ID:</label>
+                <input type="text" id="friendID" class="form-input" name="friendID">
+
+                <label for="action">Action:</label>
+                <select id="action" name="action">
+                    <option value="add">Add</option>
+                    <option value="remove">Remove</option>
+                </select>
+
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
 </body>
