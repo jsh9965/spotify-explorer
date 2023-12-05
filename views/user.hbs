@@ -1,0 +1,34 @@
+<head>
+    <title>My Profile</title>
+    <link rel="stylesheet" href="/public/styles/userHeader.css" type="text/css" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+    <div class="profile-header">
+        <div class="profile-container">
+            <img class="profile-image" src={{pfp}} alt="User Image">
+            <div class="profile-info">
+                <p>Username: {{username}}</p>
+                <p>ID: {{id}}</p>
+            </div>
+        </div>
+
+        <div class="bullet-points">
+            <p>Facts:</p>
+            <ul>
+                <li class="bullet-point">Friends: {{friendsDetails.length}}</li>
+                <li class="bullet-point"><a href="/Songs?user={{id}}">Songs: {{songs}}</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="friends-section">
+        <div class="friends-list">
+            <h3>Friends List:</h3>
+            {{#each friendsDetails}}
+                <div class="friends">
+                    <a href="/Songs?user={{this.id}}"><img class="friend-profile-image" src={{this.profilePicture}} alt="User Image"></a>
+                    <p>ID: {{this.id}}</p>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</body>

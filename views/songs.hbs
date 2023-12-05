@@ -5,8 +5,14 @@
     <h1>{{username}}'s Playlist</h1>
     <ul>
         {{#each songs}}
-            <li>{{this.title}} - {{this.artist}}</li>
+            <li>{{this.title}} - {{this.artist}} - {{this.duration}} (ms)</li>
         {{/each}}
     </ul>
+
+    <form id="change playlist" action="/Songs?user={{this.id}}" method="POST">
+        <label for="playlist" placeholder="Playlist ID">Change your playlist</label>
+        <input type="text" id="playlist" name="playlist">
+        <input type="submit" value="Submit">
+    </form>
 </body>
 </html>

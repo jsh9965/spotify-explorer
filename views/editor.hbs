@@ -4,23 +4,15 @@
 <h2>Fill out form to filter playlist
 </h2>
 <form id="search-form" action="/editor" method="POST">
-    <label for="genre">Genre:</label>
-    <input type="text" id="genre" name="genre">
+
+    <label for="user">UserID:</label>
+    <input type="text" id="id" name="id" required = "true">
     <br>
-    <label for="time">Time:</label>
+    <label for="time">Time (ms):</label>
     <input type="text" id="time" name="time">
 
-    <label for="time-comparison">Time Comparison:</label>
-    <select id="time-comparison" name="time-comparison">
-        <option value="less-than">Less Than</option>
-        <option value="greater-than">Greater Than</option>      
-    </select>
-    <br>
-    <label for="streams">Monthly Streams:</label>
-    <input type="text" id="streams" name="streams">
-    
-    <label for="streams-comparison">Streams Comparison:</label>
-    <select id="streams-comparison" name="streams-comparison">
+    <label for="comparison">Time Comparison:</label>
+    <select id="comparison" name="comparison">
         <option value="less-than">Less Than</option>
         <option value="greater-than">Greater Than</option>
     </select>
@@ -28,32 +20,6 @@
     <label for="artist">Artist:</label>
     <input type="text" id="artist" name="artist">
     <br>
-    <label for="date">Date:</label>
-    <input type="text" id="date" name="date">
-    
-    <label for="date-comparison">Date Comparison:</label>
-    <select id="date-comparison" name="date-comparison">
-        <option value="less-than">Less Than</option>
-        <option value="greater-than">Greater Than</option>
-    </select>
-    <br>
-    <label for="album">Album:</label>
-    <input type="text" id="album" name="album">
     
     <input type="submit" value="Search">
 </form>
-
-{{#if genre}}
-<div class="submitted-values">
-    <h2>Submitted Values:</h2>
-    <p>Genre: {{genre}}</p>
-    <p>Time: {{time}}</p>
-    <p>Time Comparison: {{timeComparison}}</p>
-    <p>Monthly Streams: {{streams}}</p>
-    <p>Streams Comparison: {{streamsComparison}}</p>
-    <p>Artist: {{artist}}</p>
-    <p>Date: {{date}}</p>
-    <p>Date Comparison: {{dateComparison}}</p>
-    <p>Album: {{album}}</p>
-</div>
-{{/if}}

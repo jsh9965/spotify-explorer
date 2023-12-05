@@ -19,9 +19,11 @@ friends:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 //Will only store songs which are featured in a least one user's playlsit
 const Song = new mongoose.Schema({
   title: {type: String, required: true},
-  Artist: {type: String, required: true}
+  Artist: {type: String, required: true},
+  duration: {type: Number, required: true}
 });
 
 // TODO: add remainder of setup for slugs, connection, registering models, etc. below
 mongoose.model('appUser', appUser);
+mongoose.model('Song', Song);
 mongoose.connect(process.env.DSN);

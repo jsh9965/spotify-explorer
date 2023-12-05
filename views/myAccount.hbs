@@ -38,7 +38,7 @@
             <h3>Friends List:</h3>
             {{#each friendsDetails}}
                 <div class="friends">
-                    <img class="friend-profile-image" src={{this.profilePicture}} alt="User Image">
+                    <a href="/user?user={{this.id}}"><img class="friend-profile-image" src={{this.profilePicture}} alt="User Image"></a>
                     <p>ID: {{this.id}}</p>
                 </div>
             {{/each}}
