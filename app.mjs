@@ -37,11 +37,10 @@ passport.use(
         {
             clientID: '93f9f155c30949a98f9e0f3ee7aab905',
             clientSecret: '340a2326cff24d74bbddfd1ea681f348',
-            callbackURL: 'http://localhost:24931/authSuccess' // Adjust the URL based on your setup
+            callbackURL: 'http://linserv1.cims.nyu.edu:24931/authSuccess' // Adjust the URL based on your setup
         },
         async function(accessToken, refreshToken, expires_in, profile, done) {
             try {
-                console.log(profile);
                 const existingUser = await appUser.findOne({ id: profile.id });
                 if (existingUser) {
                     //don't change custom usernames or pfps of existing users
@@ -113,7 +112,7 @@ app.get('/myAccount', async (req, res) => {
     try{
         let userInDatabase;
         if (!req.isAuthenticated()) {
-            res.redirect('/login'); // Redirect to login if not authenticated
+            res.redirect('/login');
             return;
         }
         if(!req.session.userID)
@@ -121,7 +120,6 @@ app.get('/myAccount', async (req, res) => {
             req.session.userID = req.user.id
             userInDatabase = await appUser.findOne({ id: req.session.userID });
             if (!userInDatabase) {
-                // If the user doesn't exist in the database, create a new user
                 userInDatabase = new appUser({
                     id: req.user.id,
                     username: req.user.displayName,
@@ -130,7 +128,6 @@ app.get('/myAccount', async (req, res) => {
                     friends: []
                 });
 
-                // Save the new user to the database
                 await userInDatabase.save();
             }
             req.session.user = userInDatabase;
@@ -176,13 +173,19 @@ app.post('/myAccount', async (req, res) => {
             const friendToAdd = await appUser.findOne({ id: req.body.friendID });
             if(friendToAdd)
             {
-                if (req.body.action === "add" && !(userInDatabase.friends.some(async friendID => friendID == req.body.friendID))) {
-                    if (friendToAdd) {
-                        userInDatabase.friends.push(friendToAdd);
-                    }
+                let inList = await userInDatabase.friends.reduce((accumulator, currentFriend) =>
+                accumulator || (friendToAdd._id.equals(currentFriend)), false,)
+                if (req.body.action === "add" && !(inList)) {
+                    userInDatabase.friends.push(friendToAdd);
                 }
                 if (req.body.action === "remove") {
-                    const friendIndex = userInDatabase.friends.findIndex((async friendID => friendID == req.body.friendID));
+                    let friendIndex = -1
+                    for (let i = 0; i < userInDatabase.friends.length; i++) {
+                        if (friendToAdd._id.equals(userInDatabase.friends[i])) {
+                            friendIndex = i;
+                            break;
+                        }
+                    }
 
                     if (friendIndex !== -1) {
                         userInDatabase.friends.splice(friendIndex, 1);
