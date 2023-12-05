@@ -220,6 +220,34 @@ app.get('/logout', (req, res) => {
       });
 });
 
+app.get('/logout', (req, res) => {
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        res.redirect('/');
+      });
+});
+
+app.get('/Songs', async (req, res) => {
+    try {
+        const user = await appUser.findOne({ id: req.query.user });
+
+        if (!user) {
+            res.status(404).send('User not found');
+            return;
+        }
+        const songDetails = await Promise.all(
+            user.list.map(async songID => {
+                const song = await appUser.findById(songID);
+                return { title: song.title, artist: song.artist };
+            })
+        );
+        res.render('songs', { username: user.username, songs: songDetails });
+    } catch (error) {
+        console.error('Error in /Songs route:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 console.log("here");
 app.listen(process.env.PORT || 3000);
 

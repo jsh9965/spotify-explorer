@@ -8,7 +8,7 @@ const appUser = new mongoose.Schema({
   id: {type: String, required: true},
   username: {type: String, required: true},
   profilePicture: {type: String, required: true},
-  lists:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'songList' }],
+  list:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'song' }],
 friends:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 }, {
   _id: true
@@ -20,15 +20,6 @@ friends:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 const Song = new mongoose.Schema({
   title: {type: String, required: true},
   Artist: {type: String, required: true}
-});
-
-// Song list
-// * Can have any numebr of songs
-// can create automatically by applying restraints to existing playlsits
-const songList = new mongoose.Schema({
-  name: {type: String, required: true},
-  songs:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Song' }],
-  public: {type: Boolean, required: true}
 });
 
 // TODO: add remainder of setup for slugs, connection, registering models, etc. below
