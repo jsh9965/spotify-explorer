@@ -245,10 +245,35 @@ app.get('/Songs', async (req, res) => {
             res.status(404).send('User not found');
             return;
         }
-        const songDetails = await Promise.all(
-            user.list.map(async songID => {
+
+        let filteredSongs = user.list;
+        if (req.query.time || req.query.artist) {
+            filteredSongs = [];
+            let max = req.query.time;
+            if(!req.query.time)
+            {
+                max = 9999999999
+            }
+            let artist = req.query.artist.toLowerCase();
+            for (const songID of user.list) {
                 const song = await Song.findById(songID);
-                return { title: song.title, artist: song.Artist, duration: song.duration};
+                const meetsTimeCriteria =
+                    req.query.comp === 'greater-than'
+                        ? song.duration >= max
+                        : song.duration <= max;
+
+                const meetsArtistCriteria = (song.Artist.toLowerCase()).includes(artist);
+
+                if (meetsTimeCriteria && meetsArtistCriteria) {
+                    filteredSongs.push(songID);
+                }
+            }
+        }
+
+        const songDetails = await Promise.all(
+            filteredSongs.map(async songID => {
+                const song = await Song.findById(songID);
+                return { title: song.title, artist: song.Artist, duration: song.duration };
             })
         );
 
