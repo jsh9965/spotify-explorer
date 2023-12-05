@@ -4,24 +4,25 @@ The content below is an example project proposal / requirements document. Replac
 
 ## Overview
 
-This will be a site that will allow users to filter, create, and analyze their music taste, as well as compare with other people.  There are many sites that use the Spotify API to tell you very specific things about your music taste, but this will allow the user to choose what statistics they want to see, make and manage playlists using this information.  They will also be able to have friends, and view their friend's music, and apply filters in a similar way.  This will involve using the spotify API to sort and filter by various statistics such as genre, popularity, length, artist, album, or intersection with other playlists.
+This will be a site that will allow users to filter, and analyze their music taste, as well as compare with other people who they can add as friends.  The site will be very customizable, with users being able to add friends and remove as they please, as well as change their username and profile picture.  Users will be able to view their own or their friend's music, and apply filters in order to see certain subsets of their playlist.  This will involve using the spotify API to sort and filter by various statistics.
 
 
 ## Data Model
 
 The application will store Users, Songs, Lists of songs, and Friends
 
-* users can have as many lists and friends as they choose
-* each friend is another user, with their own song lists
+* users have one associated list of songs, and one associated list of friends, as many as they wish
+* each friend is another user, with their own song list
 
 
 An Example User:
 
 ```javascript
 {
+  id: uniqueIdentifier
   username: "musicEnjoyer",
-  hash: // a password hash,
-  lists: // an array of song lists
+  profile pic: image.png
+  list: // an array of songs
   friends: // an array of other user's names
 }
 ```
@@ -31,17 +32,7 @@ A Song:
 {
   title: //name of song
   artist: //singer of the song
-}
-```
-
-
-A Song List:
-
-```javascript
-{
-  playlsitName: //name of list
-  songs: //an array of songs
-  public: //boolean which determines whether friends can see this playlist
+  duration: //length of song
 }
 ```
 
@@ -62,7 +53,7 @@ A Song List:
 
 ![editor](documentation/Editor.jpg)
 
-/User/*username* - page for viewing other people's account, typically friends, so you can see their friends and playlsits
+/User - page for viewing other people's account, typically friends, so you can see their friends and playlist
 
 ![User](documentation/GeneralUser.jpg)
 
@@ -72,29 +63,31 @@ Basic site [map](documentation/SiteMap.jpg)
 
 ## User Stories or Use Cases
 
-1. as non-registered user, I can register a new account with the site
+1. as non-registered user, I can register a new account with the site by logging in with spotify
 2. as a user, I can log in to the site
-3. as a user, I can add friends, and view my friends' accounts to see their playlists
-4. as a user, I can view my playlists, and mark them to be public or private
-5. as a user, I can create new playlists, or preview them, by applying filters and operations on existing playlists
-6. as a user, I can change my username, or logout
+3. as a user, I can add friends, and view my friends' accounts to see their playlist
+4. as a user, I can view my playlist
+5. as a user, I can create new playlists by uploading playlist ids
+6. as a user, I can preview any playlist or subset thereof, by applying filters on my existing playlists
+7. as a user, I can change my username, or profile picture, or logout
 
 ## Research Topics
 
 * (5 points) Integrate user authentication
     * I'm going to be using passport for user authentication
-* (4 points) Unit tests with javascript
-  * use mocha
-  * make sure website does not crash even under variety of combinations of inputs/filters
-* (4 points) Spotify API
+    * Make users log in with spotify
+    * Ensure users remain logged in to view, but may log out
+* (5 points) Spotify API
     * use the spotify API to get songs/playlists, and find information about them
+    * use spotify API for default username, ID, and pfp
 
-13 points total out of 10 required points
+10 points total out of 10 required points
 
 
 ## [Link to Initial Main Project File](app.mjs) 
 
 ## Annotations / References Used
 
-1. [passport.js authentication docs](http://passportjs.org/docs) - to be added
-
+1. [passport.js authentication docs](http://passportjs.org/docs)
+2. [passport - spotify example](https://calebbbbs.medium.com/passport-with-spotify-59a569a2c1bb)
+3. [spotify dev resources](https://developer.spotify.com/documentation/web-api)
