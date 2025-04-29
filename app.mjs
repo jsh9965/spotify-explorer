@@ -35,9 +35,9 @@ app.use(passport.session());
 passport.use(
     new SpotifyStrategy(
         {
-            clientID: '93f9f155c30949a98f9e0f3ee7aab905',
-            clientSecret: '340a2326cff24d74bbddfd1ea681f348',
-            callbackURL: 'http://linserv1.cims.nyu.edu:24931/authSuccess' // Adjust the URL based on your setup
+            clientID: SPOTIFY_CLIENT_ID,
+            clientSecret: SPOTIFY_CLIENT_SECRET,
+            callbackURL: SPOTIFY_REDIRECT_URI // Adjust the URL based on your setup
         },
         async function(accessToken, refreshToken, expires_in, profile, done) {
             try {
@@ -295,8 +295,8 @@ app.post('/Songs', async (req, res) => {
             return;
         }
         //switch playlist
-        const clientId = '93f9f155c30949a98f9e0f3ee7aab905';
-        const clientSecret = '340a2326cff24d74bbddfd1ea681f348';
+        const clientId = SPOTIFY_CLIENT_ID;
+        const clientSecret = SPOTIFY_CLIENT_SECRET;
         const playlistId = req.body.playlist;
         let accessToken;
         try {
