@@ -37,7 +37,7 @@ passport.use(
         {
             clientID: SPOTIFY_CLIENT_ID,
             clientSecret: SPOTIFY_CLIENT_SECRET,
-            callbackURL: SPOTIFY_REDIRECT_URI // Adjust the URL based on your setup
+            callbackURL: SPOTIFY_REDIRECT_URI // Adjust the URL if needed
         },
         async function(accessToken, refreshToken, expires_in, profile, done) {
             try {
